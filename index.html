@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plutonium Beta</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0a001f, #1a0033);
+            color: #e0d0ff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        h1 {
+            font-size: 48px;
+            color: #bb86fc;
+            text-shadow: 0 0 25px #6a0dad;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 50px;
+            opacity: 0.9;
+        }
+        .btn {
+            background: linear-gradient(to bottom, #6a0dad, #4b0082);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 22px;
+            border-radius: 20px;
+            margin: 15px auto;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(106, 13, 173, 0.8);
+            transition: 0.4s;
+            width: 90%;
+            max-width: 450px;
+            display: block;
+        }
+        .btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 40px rgba(138, 43, 226, 1);
+        }
+        .status {
+            margin-top: 40px;
+            padding: 25px;
+            border-radius: 20px;
+            font-size: 22px;
+            background: rgba(30, 30, 60, 0.6);
+        }
+        .pending { border: 3px solid orange; color: orange; }
+        .approved { border: 3px solid lime; color: lime; }
+        .rejected { border: 3px solid red; color: red; }
+    </style>
+</head>
+<body>
+    <h1>PLUTONIUM</h1>
+    <p>Hello, this is open beta test plutonium</p>
+
+    <button class="btn" onclick="submitApplication()">Подать заявку</button>
+    <button class="btn" onclick="showProfile()">Профиль / Статус</button>
+    <button class="btn" onclick="downloadCheat()">Скачать чит</button>
+
+    <div id="status" class="status">Вы ещё не подавали заявку</div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        // ←←← ЗАМЕНИ ЭТУ ССЫЛКУ НА СВОЮ РЕАЛЬНУЮ ССЫЛКУ НА ЧИТ!
+        const CHEAT_LINK = "https://your-real-cheat-link.com/download";
+
+        let status = localStorage.getItem('plutonium_status') || null;
+
+        function updateStatus() {
+            const statusDiv = document.getElementById('status');
+            if (!status) {
+                statusDiv.textContent = "Вы ещё не подавали заявку";
+                statusDiv.className = "status";
+            } else if (status === 'pending') {
+                statusDiv.textContent = "Статус: на рассмотрении ⏳";
+                statusDiv.className = "status pending";
+            } else if (status === 'approved') {
+                statusDiv.textContent = "Статус: одобрено ✅";
+                statusDiv.className = "status approved";
+            } else if (status === 'rejected') {
+                statusDiv.textContent = "Статус: отклонено ❌";
+                statusDiv.className = "status rejected";
+            }
+        }
+
+        function submitApplication() {
+            if (status) {
+                tg.showAlert("Вы уже подавали заявку!");
+                return;
+            }
+            tg.showConfirm("Подать заявку на бета-тест Plutonium?", (ok) => {
+                if (ok) {
+                    status = 'pending';
+                    localStorage.setItem('plutonium_status', status);
+                    updateStatus();
+                    tg.showAlert("Заявка отправлена админу! Ожидайте одобрения.");
+                    // Если хочешь — отправь данные боту: tg.sendData(JSON.stringify({action: 'submit', user: tg.initDataUnsafe.user}));
+                }
+            });
+        }
+
+        function showProfile() {
+            updateStatus();
+        }
+
+        function downloadCheat() {
+            if (status === 'approved') {
+                tg.showConfirm("Скачать чит Plutonium?", (ok) => {
+                    if (ok) {
+                        window.open(CHEAT_LINK, '_blank');
+                    }
+                });
+            } else {
+                tg.showAlert("Ваша заявка ещё не одобрена. Пожалуйста, ожидайте.");
+            }
+        }
+
+        updateStatus();
+    </script>
+</body>
+</html>
