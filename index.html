@@ -1,135 +1,390 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plutonium Beta</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Invize CS2 | Головна</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            background: linear-gradient(to bottom, #0a001f, #1a0033);
-            color: #e0d0ff;
-            font-family: 'Arial', sans-serif;
+        /* БАЗОВІ НАЛАШТУВАННЯ */
+        * {
             margin: 0;
-            padding: 20px;
-            text-align: center;
-            min-height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #090a0f;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* НАВІГАЦІЯ */
+        header {
+            background: rgba(9, 10, 15, 0.95);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ff7300;
+            box-shadow: 0 4px 20px rgba(255, 115, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 900;
+            color: #ff7300;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: #fff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 35px;
+        }
+
+        nav ul li a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 15px;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ff7300;
+            text-shadow: 0 0 10px rgba(255, 115, 0, 0.5);
+        }
+
+        /* ГОЛОВНИЙ ЕКРАН */
+        .hero {
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(9,10,15,0.7), #090a0f), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop') center/cover;
+            padding: 0 20px;
         }
-        h1 {
-            font-size: 48px;
-            color: #bb86fc;
-            text-shadow: 0 0 25px #6a0dad;
-            margin-bottom: 10px;
+
+        .hero h1 {
+            font-size: 70px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.8);
         }
-        p {
-            font-size: 20px;
-            margin-bottom: 50px;
-            opacity: 0.9;
-        }
-        .btn {
-            background: linear-gradient(to bottom, #6a0dad, #4b0082);
-            color: white;
-            border: none;
-            padding: 20px 50px;
+
+        .hero p {
             font-size: 22px;
-            border-radius: 20px;
-            margin: 15px auto;
+            color: #9ca3af;
+            margin-bottom: 50px;
+            max-width: 700px;
+        }
+
+        /* КНОПКИ */
+        .btn {
+            padding: 18px 45px;
+            font-size: 16px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff7300, #ffaa00);
+            color: #000;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
-            box-shadow: 0 0 25px rgba(106, 13, 173, 0.8);
-            transition: 0.4s;
-            width: 90%;
-            max-width: 450px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 115, 0, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 115, 0, 0.6);
+        }
+
+        /* СПІЛЬНІ СТИЛІ ДЛЯ СЕКЦІЙ */
+        section {
+            padding: 120px 50px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 45px;
+            margin-bottom: 70px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .section-title span {
+            color: #ff7300;
+        }
+
+        /* МАГАЗИН (Оновлена сітка) */
+        #store {
+            background-color: #0e1017;
+            border-top: 1px solid #1a1c23;
+            border-bottom: 1px solid #1a1c23;
+        }
+
+        .store-grid {
+            display: grid;
+            /* Картки будуть автоматично підлаштовуватися, максимум 3 в ряд */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #141721;
+            padding: 50px 30px;
+            border-radius: 8px;
+            border: 2px solid #232736;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ефект підсвітки картки */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: #ff7300;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            border-color: #ff7300;
+            box-shadow: 0 15px 35px rgba(255, 115, 0, 0.15);
+        }
+
+        .card h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .card p {
+            color: #8b949e;
+            margin-bottom: 30px;
+            font-size: 15px;
+            height: 60px; /* Фіксована висота, щоб картки були рівними */
+        }
+
+        .card .price {
+            font-size: 35px;
+            font-weight: 900;
+            color: #ff7300;
+            margin-bottom: 30px;
             display: block;
         }
-        .btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 40px rgba(138, 43, 226, 1);
+
+        .card .btn {
+            width: 100%;
         }
-        .status {
-            margin-top: 40px;
-            padding: 25px;
-            border-radius: 20px;
-            font-size: 22px;
-            background: rgba(30, 30, 60, 0.6);
+
+        /* ПІДТРИМКА (Окремий блок) */
+        #support {
+            background: radial-gradient(circle at center, #141721 0%, #090a0f 100%);
         }
-        .pending { border: 3px solid orange; color: orange; }
-        .approved { border: 3px solid lime; color: lime; }
-        .rejected { border: 3px solid red; color: red; }
+
+        .support-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(20, 23, 33, 0.8);
+            padding: 50px;
+            border-radius: 12px;
+            border: 1px solid #2a2f42;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .support-wrapper p {
+            color: #9ca3af;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d1d5db;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .support-wrapper input, .support-wrapper textarea {
+            width: 100%;
+            padding: 18px;
+            background: #090a0f;
+            border: 2px solid #2a2f42;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .support-wrapper input:focus, .support-wrapper textarea:focus {
+            outline: none;
+            border-color: #ff7300;
+            box-shadow: 0 0 15px rgba(255, 115, 0, 0.2);
+        }
+
+        /* ФУТЕР */
+        footer {
+            background: #050608;
+            padding: 40px;
+            text-align: center;
+            border-top: 2px solid #1a1c23;
+        }
+        
+        .footer-text {
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .footer-text span {
+            color: #ff7300;
+        }
+
     </style>
 </head>
 <body>
-    <h1>PLUTONIUM</h1>
-    <p>Hello, this is open beta test plutonium</p>
 
-    <button class="btn" onclick="submitApplication()">Подать заявку</button>
-    <button class="btn" onclick="showProfile()">Профиль / Статус</button>
-    <button class="btn" onclick="downloadCheat()">Скачать чит</button>
+    <header>
+        <div class="logo">INVIZE <span>CS2</span></div>
+        <nav>
+            <ul>
+                <li><a href="#home">Головна</a></li>
+                <li><a href="#store">Магазин</a></li>
+                <li><a href="#support">Підтримка</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <div id="status" class="status">Вы ещё не подавали заявку</div>
+    <section id="home" class="hero">
+        <h1>Проект Invize</h1>
+        <p>Крутий пінг, 128 tickrate, жодних лагів. Заходь, рознось кабіни та ставай кращим разом із нами.</p>
+        <button class="btn" id="copy-ip-btn">Копіювати IP: play.invize-cs.com</button>
+    </section>
+
+    <section id="store">
+        <h2 class="section-title">Магазин <span>Привілеїв</span></h2>
+        
+        <div class="store-grid">
+            <div class="card">
+                <h3>VIP Статус</h3>
+                <p>Додаткові гранати, броня на старті раунду, тег у чаті та резервний слот.</p>
+                <span class="price">150 ₴</span>
+                <button class="btn">Придбати</button>
+            </div>
+            
+            <div class="card">
+                <h3>Premium</h3>
+                <p>Всі можливості VIP + кастомні скіни на зброю, ножі, рукавички.</p>
+                <span class="price">250 ₴</span>
+                <button class="btn">Придбати</button>
+            </div>
+            
+            <div class="card">
+                <h3>Admin Права</h3>
+                <p>Доступ до адмін-меню: кік, бан, мут, зміна карти. Тільки 16+.</p>
+                <span class="price">500 ₴</span>
+                <button class="btn">Заявка</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="support">
+        <h2 class="section-title">Зворотній <span>Зв'язок</span></h2>
+        
+        <div class="support-wrapper">
+            <p>Виникли проблеми з сервером або донатом? Залиш заявку, і адміністрація відповість найближчим часом.</p>
+            
+            <form id="support-form">
+                <div class="input-group">
+                    <label for="username">Твій Нікнейм / Discord</label>
+                    <input type="text" id="username" placeholder="Наприклад: froyzensx#1234" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="message">Опис проблеми</label>
+                    <textarea id="message" rows="4" placeholder="Розпиши все детально..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%;">Відправити запит</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p class="footer-text">&copy; 2026 <span>Invize</span> CS2 Project. Всі права захищені.</p>
+    </footer>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-
-        // ←←← ЗАМЕНИ ЭТУ ССЫЛКУ НА СВОЮ РЕАЛЬНУЮ ССЫЛКУ НА ЧИТ!
-        const CHEAT_LINK = "https://your-real-cheat-link.com/download";
-
-        let status = localStorage.getItem('plutonium_status') || null;
-
-        function updateStatus() {
-            const statusDiv = document.getElementById('status');
-            if (!status) {
-                statusDiv.textContent = "Вы ещё не подавали заявку";
-                statusDiv.className = "status";
-            } else if (status === 'pending') {
-                statusDiv.textContent = "Статус: на рассмотрении ⏳";
-                statusDiv.className = "status pending";
-            } else if (status === 'approved') {
-                statusDiv.textContent = "Статус: одобрено ✅";
-                statusDiv.className = "status approved";
-            } else if (status === 'rejected') {
-                statusDiv.textContent = "Статус: отклонено ❌";
-                statusDiv.className = "status rejected";
-            }
-        }
-
-        function submitApplication() {
-            if (status) {
-                tg.showAlert("Вы уже подавали заявку!");
-                return;
-            }
-            tg.showConfirm("Подать заявку на бета-тест Plutonium?", (ok) => {
-                if (ok) {
-                    status = 'pending';
-                    localStorage.setItem('plutonium_status', status);
-                    updateStatus();
-                    tg.showAlert("Заявка отправлена админу! Ожидайте одобрения.");
-                    // Если хочешь — отправь данные боту: tg.sendData(JSON.stringify({action: 'submit', user: tg.initDataUnsafe.user}));
-                }
+        // Анімація копіювання IP
+        document.getElementById('copy-ip-btn').addEventListener('click', function() {
+            const ip = "play.invize-cs.com";
+            
+            navigator.clipboard.writeText(ip).then(() => {
+                const originalText = this.innerText;
+                this.innerText = "IP СКОПІЙОВАНО!";
+                this.style.background = "linear-gradient(45deg, #10b981, #059669)"; // Зміна на зелений
+                this.style.color = "#fff";
+                
+                setTimeout(() => {
+                    this.innerText = originalText;
+                    this.style.background = "linear-gradient(45deg, #ff7300, #ffaa00)";
+                    this.style.color = "#000";
+                }, 2500);
             });
-        }
+        });
 
-        function showProfile() {
-            updateStatus();
-        }
-
-        function downloadCheat() {
-            if (status === 'approved') {
-                tg.showConfirm("Скачать чит Plutonium?", (ok) => {
-                    if (ok) {
-                        window.open(CHEAT_LINK, '_blank');
-                    }
-                });
-            } else {
-                tg.showAlert("Ваша заявка ещё не одобрена. Пожалуйста, ожидайте.");
-            }
-        }
-
-        updateStatus();
+        // Форма підтримки
+        document.getElementById('support-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            alert(`Заявка відправлена, ${username}! Адміністрація скоро з тобою зв'яжеться.`);
+            this.reset();
+        });
     </script>
+
 </body>
 </html>
